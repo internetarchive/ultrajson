@@ -694,12 +694,14 @@ static void encode(JSOBJ obj, JSONObjectEncoder *enc, const char *name, size_t c
         iterObj = enc->iterGetValue(obj, &tc);
 
         enc->level ++;
+        Buffer_Reserve (enc, enc->indent * enc->level);
         Buffer_AppendIndentUnchecked (enc, enc->level);
         encode (iterObj, enc, NULL, 0);
         count ++;
       }
 
       enc->iterEnd(obj, &tc);
+      Buffer_Reserve (enc, enc->indent * enc->level);
       Buffer_AppendIndentNewlineUnchecked (enc);
       Buffer_AppendIndentUnchecked (enc, enc->level);
       Buffer_AppendCharUnchecked (enc, ']');
@@ -715,6 +717,7 @@ static void encode(JSOBJ obj, JSONObjectEncoder *enc, const char *name, size_t c
 
       while ((res = enc->iterNext(obj, &tc)))
       {
+        Buffer_Reserve (enc, 3 + (enc->indent * (enc->level + 1)));
         if(res < 0)
         {
           enc->iterEnd(obj, &tc);
@@ -742,6 +745,7 @@ static void encode(JSOBJ obj, JSONObjectEncoder *enc, const char *name, size_t c
       }
 
       enc->iterEnd(obj, &tc);
+      Buffer_Reserve (enc, enc->indent * enc->level);
       Buffer_AppendIndentNewlineUnchecked (enc);
       Buffer_AppendIndentUnchecked (enc, enc->level);
       Buffer_AppendCharUnchecked (enc, '}');
