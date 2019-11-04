@@ -164,7 +164,7 @@ static void Object_releaseObject(void *prv, JSOBJ obj)
   Py_DECREF( ((PyObject *)obj));
 }
 
-static char *g_kwlist[] = {"obj", "object_hook", "string_hook", NULL};
+static char *g_kwlist[] = {"obj", "object_hook", "string_hook", "precise_float", NULL};
 
 PyObject* JSONToObj(PyObject* self, PyObject *args, PyObject *kwargs)
 {
@@ -173,6 +173,7 @@ PyObject* JSONToObj(PyObject* self, PyObject *args, PyObject *kwargs)
   PyObject *arg;
   PyObject *oobjectHook = NULL;
   PyObject *ostringHook = NULL;
+  PyObject *opreciseFloat = NULL;
 
   JSONObjectDecoder decoder =
   {
@@ -201,7 +202,7 @@ PyObject* JSONToObj(PyObject* self, PyObject *args, PyObject *kwargs)
   };
   decoder.prv = &dp;
 
-  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|OO", g_kwlist, &arg, &oobjectHook, &ostringHook))
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|OOO", g_kwlist, &arg, &oobjectHook, &ostringHook, &opreciseFloat))
   {
       return NULL;
   }

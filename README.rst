@@ -136,18 +136,17 @@ types, so the flag is false by default.
 Enabling this flag may produce huge amount of pre_encode_hook() calls (the
 hook will be called for every single JSON value) and thus affect the performance.
 
+double_precision
+----------------
+
+This option is ignored, and is allowed for compatibility with ujson 1.35
 
 ~~~~~~~~~~~~~~~~
 Decoders options
 ~~~~~~~~~~~~~~~~
 precise_float
 -------------
-Set to enable usage of higher precision (strtod) function when decoding string to double values. Default is to use fast but less precise builtin functionality::
-
-    >>> ujson.loads("4.56")
-    4.5600000000000005
-    >>> ujson.loads("4.56", precise_float=True)
-    4.5599999999999996
+This option is ignored, and is allowed for compatibility with ujson 1.35
 
 object_hook
 -----------
